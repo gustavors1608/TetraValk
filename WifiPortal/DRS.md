@@ -13,7 +13,7 @@ O WifiPortal é destinado a possibilitar o usuario do sistema configurar a conex
 - **ESP32**: Um microcontrolador de baixo custo e baixo consumo de energia com Wi-Fi e Bluetooth integrado.
 
 ### 1.4 Referências
-- [Readme do porjeto principal]](https://github.com/gustavors1608/TetraValk)
+- [Readme do projeto principal](https://github.com/gustavors1608/TetraValk)
 
 ### 1.5 Visão Geral
 Este documento está estruturado da seguinte forma:
