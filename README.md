@@ -1,6 +1,6 @@
 # TetraValk
 
-![Versão](https://img.shields.io/badge/version-pre--beta-brightgreen) ![Status](https://img.shields.io/badge/Status-develop-brightgreen)
+![Versão](https://img.shields.io/badge/version-0.0.0-yellow) ![Status](https://img.shields.io/badge/Status-Project-brightgreen)
 
 TetraValk é um projeto modular para soluções IoT, baseado em quatro pilares, com bibliotecas dedicadas para ESP32 e servidor:
 
