@@ -155,7 +155,7 @@ Simplifique seu desenvolvimento IoT com TetraValk!
 - [X] Requisitos não funcionais: Desempenho, escalabilidade, segurança, usabilidade.
 - [X] Requisitos de hardware e software: Especificar o hardware (ESP32) e as tecnologias a serem usadas (FastAPI, bancos de dados, etc.).
 - [X] Análise de risco: Identificar possíveis riscos e planejar mitigação.
-- [ ] Documento de Requisitos do Software (DRS).
+- [ ] Documento de Requisitos do Software (DRS) (para os 4 modulos/pilares).
 - [ ] Especificação de Caso de Uso.
 - [ ] Arquitetura do Sistema
 - [ ] Definir a arquitetura do sistema (cliente-servidor).
