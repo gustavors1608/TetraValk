@@ -5,7 +5,7 @@
 TetraValk é um projeto modular para soluções IoT, baseado em quatro pilares, com bibliotecas dedicadas para ESP32 e servidor:
 
 - Conexão API: Envio e recepção de dados entre servidor e ESP32.
-- Conexão a internet: Captive portal para conexão a internet e primeiro acesso do ESP#@ no server.
+- Conexão a internet: Captive portal para conexão a internet e primeiro acesso do ESP32 no server.
 - Armazenamento de Dados: Banco de dados padronizado no servidor.
 - Gestão de Usuários: Gestão de usuários e atribuição de dados.
 
