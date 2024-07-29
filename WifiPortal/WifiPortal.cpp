@@ -95,7 +95,6 @@ class Timeout {
 
 // Declaração dos objetos
 AsyncWebServer server(80);
-Timeout reconect_timeout = Timeout(timeout_reconect);
 
 // Construtor da classe WifiPortal
 WifiPortal::WifiPortal(/* args */) {
@@ -112,37 +111,39 @@ WifiPortal::~WifiPortal() {
 void WifiPortal::reset_data() {
     remove_spiffs(ssidPath);
     remove_spiffs(passPath);
+    remove_spiffs(reconectPath);
 }
 
 // Função para criar uma div com o nome e potência do sinal Wi-Fi
-String WifiPortal::criar_div_wifi(const char* nome_wifi, uint8_t potencia_porcentagem, const char* potencia_simbolo) {
+String WifiPortal::criar_div_wifi(const char* nome_wifi, uint8_t potencia_porcentagem, const char* potencia_simbolo, uint8_t id, int16_t rssi) {
     String div_wifi = FPSTR(html_div_wifi);
     div_wifi.replace(FPSTR(T_wifi_name), nome_wifi);
     div_wifi.replace(FPSTR(T_wifi_number), String(potencia_porcentagem));
     div_wifi.replace(T_wifi_class, potencia_simbolo);
+    div_wifi.replace(T_wifi_rssi,String(rssi));
+    div_wifi.replace(T_wifi_id, String(id));
     return div_wifi;
 }
 
 // Função para criar a página de configuração do Wi-Fi
 String WifiPortal::criar_pagina_wifi(String divs_wifi) { 
     String page = FPSTR(html_inicio);
-    page += FPSTR(html_titulo_config);
     page += divs_wifi;
     divs_wifi.clear();
-    yield();
     page += FPSTR(html_form_wifi);
-    page += FPSTR(html_final);
-    return page;
-}
 
-// Função para criar a página de configuração do usuário
-String WifiPortal::criar_pagina_user() { 
-    String page = FPSTR(html_inicio);
-    page += FPSTR(html_titulo_config);
-    page += FPSTR(html_form_user);
+    #if get_email_user == true
+        page += FPSTR(html_form_user);
+    #endif
+
     page += FPSTR(html_final);
     return page;
 }
+#if get_email_user ==true
+    String WifiPortal::get_email(){
+        return read_spiffs(userPath);
+    }
+#endif
 
 // Função para verificar a conexão com a internet
 bool WifiPortal::vrf_conexao() {
@@ -150,8 +151,7 @@ bool WifiPortal::vrf_conexao() {
 }
 
 // Função para conectar ao Wi-Fi em modo estação
-bool WifiPortal::connect_wifi_sta(bool forcar_reconexao) {     
-    if (!vrf_conexao() || forcar_reconexao == true) {
+bool WifiPortal::connect_wifi_sta() {     
         String ssid = read_spiffs(ssidPath); 
         log("conectando ao wifi: " + ssid);
 
@@ -162,7 +162,7 @@ bool WifiPortal::connect_wifi_sta(bool forcar_reconexao) {
 
         // Desliga o Wi-Fi para evitar conflitos
         WiFi.disconnect();
-        WiFi.mode(WIFI_OFF);
+        //WiFi.mode(WIFI_OFF);
         WiFi.mode(WIFI_STA);
 
         // Configura o tipo de rede
@@ -193,9 +193,8 @@ bool WifiPortal::connect_wifi_sta(bool forcar_reconexao) {
             }
             delay(200);
         }
+        log(F("Conectado com sucesso"));
         return true;
-    }
-    return true;
 }
 
 // Função para configurar o servidor em modo ponto de acesso (AP)
@@ -224,34 +223,30 @@ void WifiPortal::config_server_ap() {
             const char *pass = request->getParam(PARAM_INPUT_2)->value().c_str();
             write_spiffs(passPath, pass);
         }
-        request->send(200, "text/html", FPSTR(html_sucesso_wifi));
-        delay(5000);
+
         #if get_email_user == true
-            request->redirect(F("/user"));
-        #else
-            ESP.restart();
+            if (request->hasParam(PARAM_INPUT_3)) {
+                const char *email = request->getParam(PARAM_INPUT_3)->value().c_str();
+                write_spiffs(userPath, email);
+            }
         #endif
-    });
+           
+        String response = FPSTR(html_sucesso_wifi);
 
-    // Tela para pegar email do usuário
-    server.on("/user", HTTP_GET, [](AsyncWebServerRequest *request) {
-        static String html_exibir_user = "";
-        if (html_exibir_user == "") {
-            html_exibir_user = read_spiffs(html_user);
-        }
-        request->send_P(200, "text/html", html_exibir_user.c_str());
-    });
+        // Adiciona a string de sucesso do usuário se necessário
+        #if(get_email_user == true)
+            response += FPSTR(html_sucesso_user);
+        #endif
 
-    // Salvar configuração do usuário
-    server.on("/usersave", HTTP_GET, [] (AsyncWebServerRequest *request) {
-        if (request->hasParam(PARAM_INPUT_3)) {
-            const char *user = request->getParam(PARAM_INPUT_3)->value().c_str();
-            write_spiffs(userPath, user);
-        }
-        request->send(200, "text/html", FPSTR(html_sucesso_user));
+        request->send(200, "text/html", response);
+
+        response.clear();
+        
         delay(5000);
         ESP.restart();
     });
+
+
 }
 
 // Função para converter o RSSI para porcentagem
@@ -276,33 +271,110 @@ void WifiPortal::montar_captive_wifi() {
     for (int id_rede = 0; id_rede < this->scan_wifis(); id_rede++) {
         int rssi = WiFi.RSSI(id_rede);
         uint8_t porcentagem_sinal = this->converter_rssi_porcentagem(rssi);
+
         if (porcentagem_sinal > porcentagem_minima_sinal) {
             divs_wifis.concat(
-                this->criar_div_wifi(WiFi.SSID(id_rede).c_str(), porcentagem_sinal, String(map(porcentagem_sinal, 0, 100, 1, 4)).c_str())
+                this->criar_div_wifi(WiFi.SSID(id_rede).c_str(), porcentagem_sinal, String(map(porcentagem_sinal, 0, 100, 1, 4)).c_str(),id_rede,rssi)
             );  
         }
         yield();
     }
-
-    write_spiffs(html_user, (this->criar_pagina_user()).c_str());
     write_spiffs(html_home, (this->criar_pagina_wifi(divs_wifis).c_str()));
 
     divs_wifis.clear();
 }
 
-// Função para tentar conectar e, se falhar, abrir um captive portal para configuração
-bool WifiPortal::connect() {
-    init_spiffs();
-    if (this->connect_wifi_sta(false) == false) {
-        String ssid = read_spiffs(ssidPath); 
-        yield();
-        if (ssid == "") {
-            this->abrir_portal();
-        }
-        return false;
-    }
-    return true;
+byte WifiPortal::vrf_counter_reconect(){
+    return (read_spiffs(reconectPath).toInt() > 255)?255:read_spiffs(reconectPath).toInt();
 }
+
+void WifiPortal::increment_counter_reconect(){
+    byte counter = this->vrf_counter_reconect();
+    counter++;
+
+    // Converte o valor de counter para uma string
+    char buffer[4]; // Buffer grande o suficiente para armazenar um valor de 0 a 255
+    itoa(counter, buffer, 10);
+
+    // Escreve o valor convertido para o arquivo
+    write_spiffs(reconectPath, buffer);
+
+}
+
+// Função para tentar conectar e, se falhar, abrir um captive portal para configuração
+void WifiPortal::connect() {
+    init_spiffs();
+
+    String ssid = read_spiffs(ssidPath);
+    if (ssid == "") {
+        // Abre o AP para configuração
+        this->abrir_portal();  
+        return;
+    }
+
+    // Verifica se já se conectou a essa rede anteriormente
+    if (vrf_counter_reconect() > 0) {
+        while (true) {
+            if (this->connect_wifi_sta() == true) {
+                // Conectou: Incrementa o valor do contador de reconexões
+                this->increment_counter_reconect();
+                break;
+            } else {
+                // Não conectou: Reinicia e tenta novamente(tenta infinitamente até ir pois ja se conectou nela outras vezes)
+                delay(10000);
+                ESP.restart();
+            }
+        }
+    } else {
+        // Tenta conectar uma vez
+        if (this->connect_wifi_sta()) {
+            // Conectou: Prossegue normalmente
+            this->increment_counter_reconect();
+        } else {
+            // Não conectou: Abre o AP novamente
+            this->abrir_portal();  
+        }
+    }
+}
+
+
+/*
+Caso 1: Senha incorreta ou ssid incorreto
+Verifica se já se conectou a essa rede anteriormente:
+Sim: Tenta reconectar repetidamente.
+    Conectou: Incrementa o valor do contador de reconexões e salva no arquivo.
+    nao conectou? reinicia e tenta denovo até conseguir
+Não: Tenta conectar uma vez.
+    Conectou: Prossegue normalmente.
+    Não conectou: Abre o AP novamente.
+
+
+Caso 2: Nenhum SSID salvo
+    Abre o AP para configuração.
+        Usuário insere SSID e senha.
+        Tenta conectar com as credenciais fornecidas:
+        reinicia e tenta se conectar com essas infos
+
+Caso 3: Conexão bem-sucedida
+    Verifica se as credenciais estão salvas.
+        Sim: Tenta conectar com as credenciais salvas.
+            Conectou: Incrementa o contador de reconexões.
+            Não conectou: entra no caso 1.
+        Não: Abre o AP para configuração.
+
+Caso 4: Rede fora do alcance
+    Verifica se as credenciais estão salvas.
+        Sim: Tenta conectar repetidamente por um período.
+            Conectou: Prossegue normalmente.
+            Não conectou: caso 1
+        Não: Abre o AP para configuração.
+
+Caso 5: Mudança de rede
+    Usuário decide mudar para uma nova rede.
+    Apaga os dados da memoria e reinicia
+
+
+*/
 
 // Função para definir o callback de configuração
 void WifiPortal::set_config_callback(void (*name_callback)(void), uint16_t ms_interval_call) {
@@ -315,8 +387,8 @@ void WifiPortal::set_config_callback(void (*name_callback)(void), uint16_t ms_in
 // Função para abrir o portal de configuração
 void WifiPortal::abrir_portal() {
     this->reset_data();
-    WiFi.disconnect();
-    WiFi.mode(WIFI_OFF);
+    //WiFi.disconnect();
+    //WiFi.mode(WIFI_OFF);
     WiFi.mode(WIFI_AP);
     WiFi.softAP(NOME_REDE_AP, NULL);
     this->montar_captive_wifi();
