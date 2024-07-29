@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang=pt-br>
+  <meta charset=UTF-8>
+  <meta content='width=device-width,initial-scale=1,user-scalable=no' name=viewport>
+  <title>Wifi Portal</title>
+  <style>
+    :root {
+      --letras:#d8d8d8;
+      --destaques: #b521ff;
+      --background:  #595858;
+
+      --logo: 2.3em;
+      --titulo: 1.6em;
+      --texto: 1em;
+      
+    }
+    html{
+        margin:0;
+        padding:0;
+    }
+    body {
+      text-align: center;
+      font-size: var(--texto);
+      font-family: ubuntu, sans-serif, Roboto, 'Helvetica Neue';
+      margin: 0;
+      padding: 0;
+      background-color: var(--background);
+      height: 100%;
+      width: 100%;
+    }
+
+    div {
+      padding: 5px;
+      margin: 6px 0;
+      box-sizing: border-box;
+    }
+
+    button,header,body,a {
+      color: var(--letras);
+      text-decoration: none;
+    }
+
+    .wifi_name{
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+
+    .q {
+      height: 16px;
+      margin: 0;
+      padding: 0 5px;
+      text-align: right;
+      min-width: 38px;
+      float: right
+    }
+
+    .q.q-0:after {
+      background-position-x: 0
+    }
+
+    .q.q-1:after {
+      background-position-x: -16px
+    }
+
+    .q.q-2:after {
+      background-position-x: -32px
+    }
+
+    .q.q-3:after {
+      background-position-x: -48px
+    }
+
+    .q.q-4:after {
+      background-position-x: -64px
+    }
+
+    .q.l:before {
+      background-position-x: -80px;
+      padding-right: 5px
+    }
+
+    .ql .q {
+      float: left
+    }
+
+    .q:after,
+    .q:before {
+      content: '';
+      width: 16px;
+      height: 16px;
+      display: inline-block;
+      background-repeat: no-repeat;
+      background-position: 16px 0;
+      background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAAAQCAMAAADeZIrLAAAAJFBMVEX///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADHJj5lAAAAC3RSTlMAIjN3iJmqu8zd7vF8pzcAAABsSURBVHja7Y1BCsAwCASNSVo3/v+/BUEiXnIoXkoX5jAQMxTHzK9cVSnvDxwD8bFx8PhZ9q8FmghXBhqA1faxk92PsxvRc2CCCFdhQCbRkLoAQ3q/wWUBqG35ZxtVzW4Ed6LngPyBU2CobdIDQ5oPWI5nCUwAAAAASUVORK5CYII=)
+    }
+
+    @media (-webkit-min-device-pixel-ratio:2),
+    (min-resolution:192dpi) {
+
+      .q:after,
+      .q:before {
+        background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALwAAAAgCAMAAACfM+KhAAAALVBMVEX///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAOrOgAAAADnRSTlMAESIzRGZ3iJmqu8zd7gKjCLQAAACmSURBVHgB7dDBCoMwEEXRmKlVY3L//3NLhyzqIqSUggy8uxnhCR5Mo8xLt+14aZ7wwgsvvPA/ofv9+44334UXXngvb6XsFhO/VoC2RsSv9J7x8BnYLW+AjT56ud/uePMdb7IP8Bsc/e7h8Cfk912ghsNXWPpDC4hvN+D1560A1QPORyh84VKLjjdvfPFm++i9EWq0348XXnjhhT+4dIbCW+WjZim9AKk4UZMnnCEuAAAAAElFTkSuQmCC);
+        background-size: 95px 16px
+      }
+    }
+
+
+
+    svg {
+      margin: .5em .5em -.35em .5em;
+      vertical-align: text-bottom
+    }
+
+    .back_logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%
+    }
+
+    .back_logo,
+    .input_div input {
+      background-color: var(--letras)
+    }
+
+    span {
+        font-size: var(--logo);
+    }
+    header {
+        width: 100%;
+    }
+
+    button,hr,
+    input, header {
+      border: none;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, .5)
+    }
+
+    .input_div input{
+      padding: 1em;
+      border-radius: .3rem;
+      width: 100%;
+      margin: 2px 0;
+      box-sizing: border-box
+    }
+
+    hr {
+      height: 1px;
+      opacity: 30%;
+      background-color: var(--letras);
+    }
+
+
+    h2,button {
+      font-size: var(--titulo);
+    }
+
+    button{
+      position: fixed;
+      bottom: 1%;
+      right: 0;
+      padding: .8em;
+      width: 95%;
+      margin: 0 2.5% 0 2.5%;
+      background-color: var(--destaques);
+    }
+
+    .wrap {
+      text-align: left;
+      width: min(400px);
+      margin: auto;
+    }
+  </style>
+  <script>
+    function c(e) {
+      document.getElementById('s').value = e.innerText || e.textContent, p = e.nextElementSibling.classList.contains('l'), document.getElementById('p').disabled = !p, p && document.getElementById('p').focus()
+    }
+  </script>
+  <body>
+  <header>
+  
+
+  <svg class=back_logo height=42.000000pt width=42.000000pt xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 370"><g fill-rule="evenodd" stroke=none ><path fill="#f9f8fa" d="M0 185v185h94a7586 7586 0 0 0 80-2A185 185 0 0 1 188 0H0v185M212 0l4 1a186 186 0 0 1 166 221l-2 5a213 213 0 0 1-12 35 185 185 0 0 1-156 108h188V0H212m-18 66a86 86 0 0 0-9 4 114 114 0 0 0-13 7 1146 1146 0 0 0-54 32c-1 3-1-2-2 71v23l2 3 1 3v25h-1c-7 5-7 12-1 15l3 2 1 2 1-2 3-3c6-3 6-9-1-14l-1-1v-10c0-13 0-12 4-10l5 3 1 1v6l-1 7c-1 2-1 4 2 5s5-3 3-5l-1-7c1-5 1-5 4-3l4 2c2 2 2 2 2 7v5l-3 3c-6 6-9 14-6 20 2 4 3 3 3-4s3-13 6-13l-1 5v3l1 7c0 7 0 7 2 7l2-7 1-7c1-1 1-2-1-3v-4c3 0 5 5 5 11 0 7 1 9 3 5 3-6 1-13-5-19l-3-3v-4c0-6 0-6 5-2 7 3 6 2 6 9 1 7 1 8 2 7l1-5c1-7 1-7 4-5 5 3 4 2 4 9v7l-2 1-1 2v2c0 6 5 8 9 4 2-3 2-5-1-8l-1-1v-5c0-7-1-7 7-3l3 2v5l-1 6c-2 2 1 6 4 5 2-1 3-4 1-6v-8s8 3 9 5v10l1 1c2 1 2 1 2-4l1-6v-2l4-2c2-2 5-3 5-2v13c3 3 7-1 4-4v-12l4-2c6-3 6-3 6 4l-1 5-1 1c-3 3-3 7 1 9 6 3 11-5 6-9-2-1-2-2-2-9v-6l4-2c5-2 5-2 5 3l-2 5c-2 2 0 5 3 5s4-3 2-5v-11l1-1 8-5 1 7-1 5-2 3c-4 4-5 6-5 10 0 10 11 15 17 8 4-6 4-11-3-18-3-4-3-3-3-11v-6l4-2 5-3h1v5l-1 6v4c4 3 8-1 5-4v-13l2-2 8-3v19l-2 2c-6 7-7 11-5 16 3 7 11 9 16 3 5-5 4-11-2-17l-3-4v-23l2-2 1-3v-92l-1-2c-2-3-4-5-10-8a460 460 0 0 1-50-26l-13-8c-9-5-11-5-17-1m8 4a272 272 0 0 1 30 15 1490 1490 0 0 1 46 27l1 2v43c0 48 0 45-3 48l-4 2a925 925 0 0 0-52 28 926 926 0 0 1-17 9l-2 2-3-2a855 855 0 0 1-75-42v-90a1022 1022 0 0 0 63-36c15-8 14-7 16-6m-3 5c-7 7-7 13-3 19l2 1v3c-1 4-1 5-2 3-2-4-6-7-13-8-4-1-4-1-4 3 0 12 7 19 16 17 1-1 1 0 2 1l1 1v8a452 452 0 0 0-3 11l-1-4c-1-8-8-14-19-14-6-1-5-1-5 5 1 8 4 13 10 16 2 2 8 2 11 0h2l3 2c2 1 2 0 2 12 0 14 0 13-4 11-2-2-2-2-2-5-1-9-10-14-22-14h-4v3c1 13 13 23 21 19 3-2 3-2 6 1l3 2a3752 3752 0 0 0 1 45v26l1 1h3l2-1v-70l6-5 3 1c8 4 18-4 20-18 1-4 1-4-4-4-12 1-19 6-20 14l-1 3-2 1-2 1v-21l2-2 3-2h1c10 4 19-4 20-18 1-4 1-3-5-3-11 1-18 7-18 14 0 2-2 5-3 5l-1-10v-10l2-2 2-1c9 2 16-5 15-16v-4h-1c-10 1-16 6-16 13 0 3-2 6-3 6l-1-3 2-7v-5l2-2c6-6 5-12-1-19-2-2-2-2-4 0m3 8c2 2 0 9-1 9-2 0-3-5-2-8 1-4 2-4 3-1m-37 15-2 2c-2 0-2 3 1 4l1 1c0 3 4 3 4 1s0-2 2-2 2-4 0-4-2-1-2-2c-1-1-4-2-4 0m65 0c-2 2-1 4 2 4 1 0 2 0 2-2s-3-4-4-2m-43 1c4 2 8 8 7 9-2 3-9-2-10-7 0-3 0-3 3-2m29 1c0 5-5 10-8 8-2-1 0-7 5-9 3-1 3-1 3 1m26 4c-2 1-1 2 0 3h3v-1c0-2-2-3-3-2m14 1-1 7c0 7 0 8 3 7h1v-13l-1-1h-2m-112 1v2c0 2 0 2-3 3-3 2-4 2-4 1s-2-2-3-1c-3 1-3 2 0 4l1 1v2c-1 4-1 4-4 4s-3 1-2 3v2l2-1c3 0 3 0 4 3l1 2-2 2c-2 2-2 2-1 3 1 2 2 2 4 0s2-2 5 0l2 1v4h2c2 0 3 0 2-2 0-2 0-2 3-3l2-1 2 2h3c2-2 2-2 0-4l-1-2 1-2 1-2 2-1h3v-4h-2c-3 0-3 0-3-2l-1-2c-1-2-1-2 1-4 1-1 1-2-1-3-1-2-2-2-3 0l-2 1h-1c-4-2-4-2-4-4s-3-3-4-2m96 9c-2 1-1 3 1 3s3-2 1-3h-2m25 0c-2 1-1 5 2 4l2-3c-1-1-3-2-4-1m-115 0c4 2 6 7 5 11-3 10-17 8-17-2 0-7 6-11 12-9m-6 6v4c2 2 5 1 5-2 0-2-3-3-5-2m108 9c0 12 1 11-6 11h-4l-1 78 3-1a3242 3242 0 0 1 26-14c3-2 2 1 3-32v-30l-1-1-2-1c-2 0-2 0-2-6v-6l-8-4-8-3v9m-74-8c8 2 15 10 10 12-3 1-9-4-12-9-1-4-1-4 2-3m45 1c1 5-7 12-11 11-1-1-2-1-1-3 0-3 5-8 9-9 3-1 3-1 3 1m16 4c-1 1 0 3 1 3l1-3h-2m21 3 3 1v3c0 3 0 3-2 3-4-1-3 0-3-4s-1-4 2-3m-161 5v3c2 2 5-1 4-3h-4m201 0v3c2 1 4-1 3-3h-3m-37 10c0 4 0 4-3 4-2 0-3 0-2-4v-3l2-1c3 0 3 0 3 4m-170 0c-2 2 1 5 3 3 2-1 1-4-1-4l-2 1m40 0v2c2 1 4 0 3-2h-3m163 0v3h4c2-2-1-5-4-3m9 0c-2 2-1 4 1 4s3-3 2-4h-3m-204 0c-1 2 0 4 2 4l2-2c0-2-2-3-4-2m151 0v4h-5v-2c0-2 3-3 5-2m-104 3c-2 1-3 4-1 5 3 3 8 0 6-4-1-1-3-2-5-1m30 2c6 2 11 8 9 10-4 3-15-6-15-11l6 1m49-1c0 1-3 7-6 9-7 5-13 2-7-4 3-3 11-6 13-5m-76 1-1 2c-1 0-2-1-1-2h2m-21 2v3c2 1 4-1 2-3h-2m5 0v3c1 1 3 0 3-2l-3-1m-42 3v1c1 2 3 2 4 0s-3-4-4-1m8 0c-1 1 0 2 2 2l2-1-2-2-2 1m162-1v6h-5v-6h5m33 0c-1 3 2 5 4 3v-3h-4m9 0v3h3c2-2-1-5-3-3m-53 0v6h-1c-4 0-4 0-4-3v-3h5m17 2v1c-1 1-1 0-1-1h1m-128 2v2l3 2 3 3a16061 16061 0 0 1-1 47l4 2a1407 1407 0 0 0 3-51l4-4c0-2-2-2-6 1-1 1-2 1-6-1l-4-1m-39 5c-2 0-2 2-1 3 2 2 4 0 4-2 0-1-2-2-3-1m-9 0c-1 1 0 4 2 4l2-2c0-2-2-3-4-2m203 0c-1 1 0 4 2 4l2-3c0-1-3-2-4-1m9 0v3h3c2-2-1-5-3-3m-53 5v3h-5v-3c0-3 0-3 3-3h2v3m11 0v3h-5v-3c-1-3 0-3 3-3h2v3m-132-1c-5 3-4 10 1 12h1v13c0 14 0 13 2 14 2 2 2 2 2-14v-13l2-2c6-6-1-15-8-10m28 0c-4 2-4 7-1 11l2 1-1 20v20l4 2 1-28v-14h1l4-4c2-6-5-12-10-8m69-1c-5 2-7 8-3 12l1 2v24c0 26-1 24 2 22l2-1v-5l1-23v-18h1c6-3 6-11-1-13h-3m41 1v1l-1-1h1m-132 4c1 1 0 3-1 4-2 1-5-2-3-4h4m27 0c2 1 0 4-2 4-3-1-2-5 1-5l1 1m67 0v3c-2 2-4 1-4-2 0-2 3-3 4-1m-131 3c-2 1-1 3 1 3s3-1 3-2l-3-2-1 1m199 0c-2 2 1 5 3 3 1-2 0-4-2-4l-1 1m-47 5v4h-5v-3c-1-4 0-4 3-4h2v3m11 0c0 3 0 4-3 4s-3-1-3-4 0-3 3-3h3v3m-51-2c-5 2-6 8-2 12l2 1v44h1l2-1h1v-43l2-1c6-6 1-14-6-12m-28 0c-5 2-6 9-1 12l1 1v43h2l2 1v-22l1-22 1-1c6-4 2-14-6-12m85 3c1 1 0 1-1 1v-2l1 1m-53 2v3c-1 2-4 1-4-2 0-2 2-3 4-1m-28 0v3h-3c-2-2 0-5 3-3m64 9v3h-5v-2c-1-4-1-4 3-4h2v3m11 0v3h-6v-3c0-3 0-3 3-3h3v3m-90 2-2 1v31l4 2v-31c1-5 0-5-2-3m79 9c0 3 0 3-3 3h-2v-3c-1-3 0-3 3-3h2v3m11-1c0 2 0 2-3 3s-3 1-3-2 0-3 3-3h3v2m20 36c6 6 4 15-3 15s-9-9-3-15c3-3 3-3 6 0m-160 0c3 2 4 6 2 8-3 3-6 3-8 0-3-3 1-10 6-8m-3 4-1 2c2 2 5 0 4-2h-3m158 0c-2 3 0 8 3 6 2-1 3-4 1-6h-4m-23 3c6 6 5 14-2 14s-9-8-3-15c3-2 3-2 5 1m-3 3c-2 1-3 4-1 6 3 3 6-1 4-4-1-2-2-3-3-2m-77 8v3h-3c-1-2 1-4 3-3m54 0v3c-2 1-4-1-3-3h3m-123 5c-3 2-2 8 2 8 2 0 4-2 4-5 0-2-4-4-6-3m-28 11v26h17c6-3 7-9 1-13l1-2c3-3 2-8-2-10-3-1-16-2-17-1m47 0c-12 3-14 20-2 26 9 5 20-4 19-14-1-8-9-13-17-12m165 0c-13 2-16 21-3 26 13 7 24-11 15-22-3-2-8-4-12-4m-186 1v26h6v-27h-3l-3 1m51 0c-15 5-10 29 6 26 3 0 7-3 8-4 0-1 0-2-3-4h-1l-1 1c-5 4-12 1-12-6s6-10 12-6l5-4c-1-3-10-5-14-3m27 0c-9 2-13 11-9 19 5 10 19 10 24 0s-5-22-15-19m47 0v5h4c4 0 4-1 4 12-1 10-1 10 3 10 2 0 2 0 2-12v-10h7v-5h-20m-26 0v26h5v-8c0-9 0-9 3-5a463 463 0 0 0 7 9l3 4h4v-26h-6v14l-4-5-6-7-2-2h-4m54 0h-3v13c0 14 0 14 3 14 2 0 2 0 2-5l1-4 2-1h2l2 4 3 4 4 2c4 0 4 0-2-8l-1-2 1-1c5-3 6-8 3-12-2-4-7-5-17-4m53 0v26h17v-5h-6l-5-1-1-10v-10h-5m-219 5c2 1 2 3 0 4l-7 1v-5h7m41 1c7 3 4 15-4 15s-10-14-2-16h1c1-1 3 0 5 1m162-1c7 2 7 14 0 16-4 1-8-2-9-6-1-7 3-12 9-10m-107 0c5 2 7 10 3 14-5 5-13 1-13-6 1-6 5-9 10-8m81 1c2 0 2 3 1 5l-6 1h-3v-3l1-4 7 1M93 288c3 2 0 5-6 5-3 0-4-2-3-6 0-1 8-1 9 1"/><path fill="#b420ff" d="m187 0-7 1A180 180 0 0 0 60 64a193 193 0 0 0-44 103 313 313 0 0 0 3 57l1 3a188 188 0 0 0 143 139 222 222 0 0 0 49 4l7-1a180 180 0 0 0 102-44 185 185 0 0 0 59-98l1-5a183 183 0 0 0-1-78A185 185 0 0 0 187 0m18 64 6 3a535 535 0 0 0 52 29l11 5c6 3 8 5 10 8l1 2v92l-1 3-2 2v23l3 4c6 6 7 12 2 17-5 6-13 4-16-3-2-5-1-9 5-16l2-2v-19l-8 3-2 2v13c3 3-1 7-5 4v-4l1-6v-5h-1l-5 3-4 2v6c0 8 0 7 3 11 7 7 7 12 3 18-6 7-17 2-17-8 0-4 1-6 5-10l2-3 1-5-1-7-8 5-1 1v11c2 2 1 5-2 5s-5-3-3-5l2-5c0-5 0-5-5-3l-4 2v6c0 7 0 8 2 9 5 4 0 12-6 9-4-2-4-6-1-9l1-1 1-5c0-7 0-7-6-4l-4 2v12c3 3-1 7-4 4v-13c0-1-3 0-5 2l-4 2v2l-1 6c0 5 0 5-2 4l-1-1v-10c-1-2-9-5-9-5v8c2 2 1 5-1 6-3 1-6-3-4-5l1-6v-5l-3-2c-8-4-7-4-7 3v5l1 1c3 3 3 5 1 8-4 4-9 2-9-4v-2l1-2 2-1v-7c0-7 1-6-4-9-3-2-3-2-4 5l-1 5c-1 1-1 0-2-7 0-7 1-6-6-9-5-4-5-4-5 2v4l3 3c6 6 8 13 5 19-2 4-3 2-3-5 0-6-2-11-5-11v4c2 1 2 2 1 3l-1 7-2 7c-2 0-2 0-2-7l-1-7v-3l1-5c-3 0-6 6-6 13s-1 8-3 4c-3-6 0-14 6-20l3-3v-5c0-5 0-5-2-7l-4-2c-3-2-3-2-4 3l1 7c2 2 0 6-3 5s-3-3-2-5l1-7v-6l-1-1-5-3c-4-2-4-3-4 10v10l1 1c7 5 7 11 1 14l-3 3-1 2-1-2-3-2c-6-3-6-10 1-15h1v-25l-1-3-2-3v-23c1-73 1-68 2-71 2-4 4-5 12-9a676 676 0 0 0 58-32c7-4 13-6 17-4m-6 6a582 582 0 0 0-47 25 4767 4767 0 0 0-29 17v90l12 9a248 248 0 0 1 23 12 872 872 0 0 0 40 21l3 2 2-2a588 588 0 0 1 25-13 1873 1873 0 0 0 48-26c3-3 3 0 3-48v-43l-1-2-7-6a1925 1925 0 0 1-55-29c-15-8-15-8-17-7m4 5c6 7 7 13 1 19l-2 2v5l-2 7 1 3c1 0 3-3 3-6 0-7 6-12 16-13h1v4c1 11-6 18-15 16l-2 1-2 2v10l1 10c1 0 3-3 3-5 0-7 7-13 18-14 6 0 6-1 5 3-1 14-10 22-20 18h-1l-3 2-2 2v21l2-1 2-1 1-3c1-8 8-13 20-14 5 0 5 0 4 4-2 14-12 22-20 18l-3-1-6 5v70l-2 1h-3l-1-1v-26a3752 3752 0 0 1-1-45l-3-2c-3-3-3-3-6-1-8 4-20-6-21-19v-3h4c12 0 21 5 22 14 0 3 0 3 2 5 4 2 4 3 4-11 0-12 0-11-2-12l-3-2h-2c-3 2-9 2-11 0-6-3-9-8-10-16 0-6-1-6 5-5 11 0 18 6 19 14l1 4c2 2 3 1 3-2v-17l-1-1c-1-1-1-2-2-1-9 2-16-5-16-17 0-4 0-4 4-3 7 1 11 4 13 8 1 2 1 1 2-3v-3l-2-1c-4-6-4-12 3-19 2-2 2-2 4 0m-3 6c-2 3-2 11 1 11l2-6c0-3-2-6-3-5m-31 17c0 1 0 2 2 2s2 4 0 4-2 0-2 2-4 2-4-1l-1-1c-3-1-3-4-1-4l2-2c0-2 3-1 4 0m64 0 1 4c-2 1-5 0-5-2s3-4 4-2m-49 1c-1 2 3 9 7 10 3 1 4 0 3-3s-9-9-10-7m29 0c-5 2-7 8-5 9 3 2 8-3 8-8 0-2 0-2-3-1m31 5 1 2v1c0 1-3 1-4-1-1-1 2-3 3-2m15 9v6h-1c-3 1-3 0-3-7 0-8 0-8 3-7l1 1v7m-111-7v2c0 2 0 2 4 4h1l2-1c1-2 2-2 3 0 2 1 2 2 1 3-2 2-2 2-1 4l1 2c0 2 0 2 3 2h2v4h-3l-2 1-1 2-1 2 1 2c2 2 2 2 0 4h-3l-2-2-2 1c-3 1-3 1-3 3 1 2 0 2-2 2h-2v-4l-2-1c-3-2-3-2-5 0s-3 2-4 0c-1-1-1-1 1-3l2-2-1-2c-1-3-1-3-4-3l-2 1v-2c-1-2-1-3 2-3s3 0 4-4v-2l-1-1c-3-2-3-3 0-4 1-1 3 0 3 1s1 1 4-1c3-1 3-1 3-3-1-2 2-3 4-2m94 9c2 1 1 3-1 3s-3-2-1-3h2m27 1c0 2-2 4-4 3l-1-3c1-2 4-2 5 0m-126 0c-3 1-5 4-5 8 0 10 14 12 17 2 2-7-6-14-12-10m5 5c2 2 1 5-2 5-2 0-2-1-2-3s2-3 4-2m112 3 8 4v6c0 6 0 6 2 6l2 1 1 1v30c-1 33 0 30-3 32a4483 4483 0 0 1-29 15l1-78h4c7 0 6 1 6-11v-9l8 3m-84-3c-1 1 1 5 3 7 5 7 14 8 9 1-2-4-11-9-12-8m44 1c-4 1-9 6-9 9-1 2 0 2 1 3 4 1 12-6 11-11 0-2 0-2-3-1m21 5-1 3-1-1c-2-1 0-3 2-2m17 2v7c5 1 5 1 5-2v-3l-3-1-2-1m-155 6c1 2-2 5-4 3-1-2 0-4 2-4l2 1m200 0c1 2-1 4-3 3v-3h3m-43 6-2 1v3c-1 4 0 4 2 4 3 0 3 0 3-4s0-4-3-4m-164 4c2 1 1 4-1 4s-3-2-2-4h3m40 0c1 2-1 3-3 2v-2h3m164 0v2c0 2-2 3-4 1s1-5 4-3m8 0v3h-3c-2-2 0-5 3-3m-204 0 1 2c0 2-3 3-4 2-2-2 1-5 3-4m144 1-1 1v2h5v-2c0-2-2-3-4-1m-96 2c3 1 2 5-1 6-3 2-7-2-5-5 2-1 4-2 6-1m20 1c0 5 11 14 15 11 2-2-3-8-9-10l-6-1m50 0c-8 3-14 12-7 12 4 0 9-5 11-10 1-3 0-3-4-2m-73 1c-1 1 0 2 1 2l1-2h-2m-17 2c2 2 0 4-2 3v-3h2m6 1c0 2-2 3-3 2v-3l3 1m-41 1v2c-1 2-3 2-4 0s2-4 4-2m8 1c1 1 0 2-2 2l-2-1c-1-1 0-2 2-2l2 1m154-1h-1v6h5v-3c0-4 0-4-4-3m41 0v3c-2 2-5 0-4-3h4m8 0c2 2-1 5-3 3v-3h3m-61 3c0 3 0 3 4 3h1v-3c1-3 1-3-2-3h-3v3m21-1c0 1 0 2 1 1v-2l-1 1m-123 3c4 2 5 2 6 1 4-3 6-3 6-1l-4 4c-2 1-2 1-2 3l-1 48-4-2v-23l1-24-3-3-3-3c0-2 0-2 4 0m-41 4c2 1 1 3-1 4l-2-2c0-2 2-4 3-2m-7 0-1 3c-1 1-3 0-3-2 0-1 3-2 4-1m203 0v3h-4c-2-2 2-5 4-3m8 0v3c-2 2-4 1-4-1s2-3 4-2m-61 2v6h5v-6h-5m11 0v6h5v-6h-5m-121 1c5 2 6 8 2 11l-2 2v13c0 16 0 16-2 14-2-1-2 0-2-14v-13h-1c-2-1-4-4-4-7 0-4 5-8 9-6m29 1c5 3 4 10-1 12h-1v14l-1 28-4-2v-20l1-20-2-1c-6-7 1-16 8-11m65-1c7 2 7 10 1 13h-1v18l-1 23v5l-2 1c-3 2-2 4-2-22a873 873 0 0 1-1-26c-4-4-2-10 3-12h3m37 1 1 1v-1h-1m-135 4c-2 2 1 5 3 4 2-2 1-5-1-5l-2 1m28-1c-2 2-1 4 1 5 2 0 4-3 2-4l-3-1m67 1c-2 1-1 4 1 4l3-2c0-2-2-3-4-2m-125 3c2 2-1 5-4 3-1-2 0-4 2-4l2 1m199 0v3c-1 1-4 0-4-2l2-2 2 1m-55 3v6h5v-7h-2l-3 1m11 0v5h5v-6h-3l-2 1m-41 0c5 3 5 8 1 12l-2 1v43h-1l-2 1h-1v-44l-2-1c-6-5 0-15 7-12m-27 1c4 2 4 8 0 11l-1 1-1 22a729 729 0 0 1-2 21h-2v-43l-1-1c-8-5-1-15 7-11m78 1v2c1 0 2 0 1-1l-1-1m-55 2c-2 1-1 5 1 5 3 0 3-3 2-4l-3-1m-28 1v3h3c2-2-1-5-3-3m62 6v6h5v-6h-5m10 0v6h6v-6h-6m-82 8a6392 6392 0 0 0 0 31l-4-2v-31l4-2v4m72 3v6h2c3 0 3 0 3-3v-3h-5m10 0 1 6c3 0 5-2 5-4v-2h-6m20 38c-6 6-4 15 3 15s9-9 3-15c-3-3-3-3-6 0m-159 1c-4 4-1 10 4 9 3-1 5-5 3-8s-5-3-7-1m5 3-1 2c-1 2-4 1-3-1s3-2 4-1m159 0c2 2 1 5-1 6-3 2-5-3-3-6h4m-32 2c-6 7-4 15 3 15s8-8 2-14c-2-3-2-3-5-1m5 6c2 3-1 7-4 4-2-2-1-5 1-6 1-1 2 0 3 2m-83 6v1c0 2 2 3 3 2 2-2-1-4-3-3m54 0c-1 2 1 4 3 3 1-2 0-3-2-3h-1m-116 6c2 1 2 3 0 5-2 3-6 1-6-2 0-4 4-6 6-3m-15 11c4 2 5 7 2 10l-1 2c6 4 5 10-1 13H78v-26c1-1 14 0 17 1m36-1c11 3 15 16 6 24-8 8-21 2-22-9-1-9 7-17 16-15m166 2c12 5 11 21-2 25-8 3-18-6-16-15 2-10 10-14 18-10m-187 11v14h-6v-13c0-15 0-14 3-14h3v13m53-12 6 3-5 4c-6-4-12-1-12 6s7 10 12 6l1-1h1c3 2 3 3 3 4-1 1-5 4-8 4-3 1-7 0-9-2-13-9-4-29 11-24m25 0c8 2 12 11 9 19-5 10-19 10-24 0s4-22 15-19m61 0v5h-7v10c0 12 0 12-2 12-4 0-4 0-3-10 0-13 0-12-4-12h-4v-5h20m-40 2a226 226 0 0 1 10 12v-14h6v26h-4l-3-4a15838 15838 0 0 0-7-9c-3-4-3-4-3 5v8h-5v-26h4l2 2m59-2c8 1 10 11 3 16l-1 1 1 2c6 8 6 8 2 8l-4-2-3-4-2-4h-2l-2 1-1 4c0 5 0 5-2 5-3 0-3 0-3-14v-13h14m47 10 1 10 5 1h6v5h-17v-13c-1-15-1-13 3-13h2v10m-231-5v5l7-1c2-1 2-3 0-4h-7m43 0h-1c-6 1-7 12-1 15 8 4 14-6 9-13-1-1-5-3-7-2m163 0c-5 2-7 9-4 13 5 7 13 3 13-5 0-6-4-10-9-8m-108 0c-5 3-6 11-2 14 5 5 12 1 12-6 0-6-5-10-10-8m79 0-1 4v3h3c6 0 8-1 6-5 0-2-6-3-8-2M84 287c-1 4 0 6 3 6 6 0 9-3 6-5-1-2-9-2-9-1"/></g></svg>
+  
+ <span>BioControl</span>
+<hr>
+ </header>
+    <div class=wrap>
+      <h2>Configurações</h2><hr>
+      
+
+      <div class="wifi_name">
+        <a onclick='c(this)' href='#p' > Nome Do Seu Wi-fi 
+            <div role='img' aria-label='100%' title='100%' class='q q-4'>100%  </div>
+        </a>
+    </div>
+    <div class="wifi_name">
+        <a onclick='c(this)' href='#p' > Nome Do Seu Wi-fi 
+            <div role='img' aria-label='100%' title='100%' class='q q-3'></div>
+        </a>
+    </div>
+    <div class="wifi_name">
+        <a onclick='c(this)' href='#p' > Nome Do Seu Wi-fi 
+            <div role='img' aria-label='100%' title='100%' class='q q-1'></div>
+        </a>
+    </div>
+      
+      <br>
+      <form action='wifisave'>
+        <div class='input_div'>
+            <label for='s'>Nome da rede Wi-Fi</label>
+            <br>
+            <input id='s' length='32' name='ssid' placeholder='Digite ou clique no seu Wi-Fi acima' required>
+        </div>
+
+        <div class='input_div'>
+            <label for='p'>Senha do Wi-Fi</label>
+            <input id='p' length='64' name='pass' placeholder='Digite a senha do seu Wi-Fi' required>
+        </div>
+
+
+        <br>
+        <hr>
+        <br>
+        <h2>Sua conta</h2>
+        Nos informe o email que poderá controlar esse dispositivo.
+        <div class='input_div'>
+            <label for="e">Email da sua conta</label>
+            <br>
+            <input id='e' length='255' name='e' placeholder='exemplo@email.com' required type='email'>
+        </div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <button type='submit'>Salvar Alterações</button>
+</form>
+      
+  </body>
